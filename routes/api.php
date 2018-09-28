@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,4 +15,28 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function($api) {
+    $api->get('version', function() {
+        $sms = app('easysms');
+        try {
+            $res = $sms->send(18835129770, [
+                'data'      => ['code' => 6379],
+                'template'  => 'SMS_129910014'
+            ]);
+            return response($res);
+        } catch (NoGatewayAvailableException $e) {
+            $message = $e->getException('aliyun')->getMessage();
+            dd($message);
+        }
+    });
+});
+
+$api->version('v2', function($api) {
+    $api->get('version', function() {
+        return response('this is version v2');
+    });
 });
