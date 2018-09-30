@@ -11,7 +11,6 @@ class AuthorizationsController extends Controller
     public function store(AuthorizationRequest $request)                            //账号密码登录
     {
         $username = $request->username;
-
         filter_var($username, FILTER_VALIDATE_EMAIL) ?
             $credentials['email'] = $username :
             $credentials['phone'] = $username;
@@ -25,7 +24,7 @@ class AuthorizationsController extends Controller
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
         ])->setStatusCode(201);
     }
     public function socialStore($type, SocialAuthorizationRequest $request)         //第三方登录
@@ -70,7 +69,6 @@ class AuthorizationsController extends Controller
                         'weixin_unionid' => $unionid,
                     ]);
                 }
-
                 break;
         }
 
@@ -85,5 +83,17 @@ class AuthorizationsController extends Controller
             'token_type' => 'Bearer',
             'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
         ]);
+    }
+
+    public function update()
+    {
+        $token = Auth::guard('api')->refresh();
+        return $this->respondWithToken($token);
+    }
+
+    public function destroy()
+    {
+        Auth::guard('api')->logout();
+        return $this->response->noContent();
     }
 }

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-
 class GenerateToken extends Command
 {
     protected $signature = 'larabbs:generate-token';
