@@ -76,15 +76,6 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    protected function respondWithToken($token)
-    {
-        return $this->response->array([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
-        ]);
-    }
-
     public function update()
     {
         $token = Auth::guard('api')->refresh();
@@ -95,5 +86,14 @@ class AuthorizationsController extends Controller
     {
         Auth::guard('api')->logout();
         return $this->response->noContent();
+    }
+
+    protected function respondWithToken($token)
+    {
+        return $this->response->array([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
+        ]);
     }
 }
