@@ -54,8 +54,15 @@ $api->version('v1', [
                 ->name('api.topics.destroy');
         });
         // 游客可以访问的接口
+        // 分类信息
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');
+        // 话题列表
+        $api->get('topics', 'TopicsController@index')
+            ->name('api.topics.index');
+        // 用户话题
+        $api->get('users/{user}/topics', 'TopicsController@userIndex')
+            ->name('api.users.topics.index');
     });
 });
 
