@@ -55,6 +55,9 @@ $api->version('v1', [
             // 发布话题
             $api->post('topics/{topic}/replies', 'RepliesController@store')
                 ->name('api.topics.replies.store');
+            // 删除回复
+            $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
+                ->name('api.topics.replies.destroy');
         });
         // 游客可以访问的接口
         // 分类信息
