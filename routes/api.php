@@ -52,6 +52,9 @@ $api->version('v1', [
             // 删除话题
             $api->delete('topics/{topic}', 'TopicsController@destroy')
                 ->name('api.topics.destroy');
+            // 发布话题
+            $api->post('topics/{topic}/replies', 'RepliesController@store')
+                ->name('api.topics.replies.store');
         });
         // 游客可以访问的接口
         // 分类信息
