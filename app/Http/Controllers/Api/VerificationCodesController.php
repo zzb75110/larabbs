@@ -19,7 +19,7 @@ class VerificationCodesController extends Controller
             return $this->response->errorUnauthorized('验证码错误');
         }
         $phone = $captchaData['phone'];
-        // 生成4位随机数，左侧补0
+        //生成4位随机数，左侧补0
         $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
         if (app()->environment('production')) {
             try {
@@ -27,10 +27,9 @@ class VerificationCodesController extends Controller
                     'data'      => ['code' => $code],
                     'template'  => 'SMS_129910014'
                 ]);
-            } catch (\GuzzleHttp\Exception\ClientException $exception) {
-                $response = $exception->getResponse();
-                $result = json_decode($response->getBody()->getContents(), true);
-                return $this->response->errorInternal($result['msg'] ?? '短信发送异常');
+            } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
+                $message = $exception->getException('aliyun')->getMessage();
+                return $this->response->errorInternal($message ?? '短信发送异常');
             }
         }
         $key = 'verificationCode_'.str_random(15);
