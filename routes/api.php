@@ -70,6 +70,10 @@ $api->version('v1', [
             // 当前登录用户权限
             $api->get('user/permissions', 'PermissionsController@index')
                 ->name('api.user.permissions.index');
+
+            //用户关注
+            $api->post('focus','FocusController@store')
+                ->name('api.focus.store');
         });
         // 游客可以访问的接口
         // 分类信息

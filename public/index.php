@@ -34,7 +34,6 @@ require __DIR__.'/../vendor/autoload.php';
 */
 //创建 Laravel 应用实例
 $app = require_once __DIR__.'/../bootstrap/app.php';
-
 /*
 |--------------------------------------------------------------------------
 | Run The Application

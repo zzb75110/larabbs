@@ -160,7 +160,7 @@ npm run watch-poll
 
 ```
 username: summer@yousails.com
-password: password
+password: password````
 ```
 
 至此, 安装完成 ^_^。

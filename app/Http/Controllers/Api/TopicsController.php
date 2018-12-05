@@ -27,8 +27,7 @@ class TopicsController extends Controller
                 $query->recentReplied();
                 break;
         }
-
-        $topics = $query->paginate(5);
+        $topics = $query->paginate(2);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }
