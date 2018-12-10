@@ -38,6 +38,9 @@ $api->version('v1', [
         // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');
+        // 用户详情
+        $api->get('users/{user}', 'UsersController@show')
+            ->name('api.users.show');
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'],function ($api){
             // 当前登录用户信息
